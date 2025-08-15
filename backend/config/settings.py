@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'admins.Usuario'
 
 # Application definition
 
@@ -40,6 +43,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+
+    'apps.admins',
+    'apps.bibliotecas',
 ]
 
 REST_FRAMEWORK = {
@@ -138,3 +144,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+KEY_ACCESS_ADMIN = config('KEY_ADMIN')
