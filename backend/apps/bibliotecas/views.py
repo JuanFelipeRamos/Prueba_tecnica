@@ -7,4 +7,3 @@ from .serializers import BibliotecaSerializer
 class BibliotecaViewSet(viewsets.ModelViewSet):
     queryset = Biblioteca.objects.all()
     serializer_class = BibliotecaSerializer
-    permission_classes = [IsAuthenticated]

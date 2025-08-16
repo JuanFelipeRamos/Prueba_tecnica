@@ -57,6 +57,7 @@ function logout() {
     display: flex;
     flex-direction: column;
     margin: 30px 0px;
+    margin-left: 10px;
 }
 
 p {

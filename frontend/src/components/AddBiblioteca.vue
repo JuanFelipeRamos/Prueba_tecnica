@@ -1,23 +1,56 @@
 <script setup>
+import { ref } from "vue"
+import { useRouter } from 'vue-router'
+import api from "@/services/axios"
+
+const tipoBiblioteca = ref("virtual")
+
+const mostrarInpuUbicacion = ref(false)
+
+const router = useRouter()
+const biblioteca = ref({
+  name: '',
+  type_biblioteca: '',
+  location: ''
+})
+
+const registrarBiblioteca = async () => {
+  try {
+    const response = await api.post('/bibliotecas/', {
+      name: biblioteca.value.name,
+      type_biblioteca: tipoBiblioteca.value,
+      location: biblioteca.value.location,
+    })
+
+    console.log('Registro de biblioteca exitoso')
+    console.log(biblioteca.value)
+    router.push('/PanelAdmin')
+
+  } catch (error) {
+    alert('Error al registrar biblioteca')
+  }
+}
 
 </script>
 
 <template>
   <div class="container">
     <div class="containerformilario">
-      <form>
+      <form @submit.prevent="registrarBiblioteca">
         <h1>
           Registra una biblioteca
         </h1>
         <div class="inputs">
-          <input type="text" required placeholder="Nombre de la biblioteca">
+          <input v-model="biblioteca.name" type="text" required placeholder="Nombre de la biblioteca">
           <div class="checkInput">
-            <input type="checkbox"><p class="pCheck">Virtual</p>
+            <input type="radio" id="virtual" name="tipo" value="virtual" v-model="tipoBiblioteca">
+            <label for="virtual">Virtual</label>
           </div>
           <div class="checkInput">
-            <input type="checkbox"><p class="pCheck">Física</p>
+            <input type="radio" id="fisica" name="tipo" value="fisica" v-model="tipoBiblioteca">
+            <label for="fisica">Física</label>
           </div>
-          <input type="text" required placeholder="Ubicación">
+          <input v-model="biblioteca.location" v-if="tipoBiblioteca === 'fisica'" type="text" required placeholder="Ubicación">
           <button>Continuar</button>
         </div>
       </form>
@@ -89,9 +122,13 @@ p {
     justify-content: center;
 }
 
-.pCheck {
+label {
     margin-left: 5px;
     margin-top: 2px;
+}
+
+.checkInput input:hover, label:hover {
+  cursor: pointer;
 }
 
 </style>
