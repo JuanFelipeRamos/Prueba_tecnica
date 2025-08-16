@@ -16,8 +16,8 @@ const login = async () => {
       password: usuario.value.password,
     })
 
-    localStorage.setItem('access', response.data.access)
-    localStorage.setItem('refresh', response.data.refresh)
+    sessionStorage.setItem('access', response.data.access)
+    sessionStorage.setItem('refresh', response.data.refresh)
 
     console.log('Inicio de sesión exitoso')
     router.push('/PanelAdmin')

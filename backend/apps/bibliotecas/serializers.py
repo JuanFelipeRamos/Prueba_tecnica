@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from .models import Biblioteca
 
-class RegistroBibliotecaSerializer(serializers.ModelSerializer):
+class BibliotecaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Biblioteca
         fields = ['name', 'location', 'type_biblioteca']
