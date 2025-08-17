@@ -5,7 +5,7 @@ from .models import Biblioteca
 class BibliotecaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Biblioteca
-        fields = ['id', 'name', 'location', 'type_biblioteca']
+        fields = ['id', 'name', 'location', 'type_biblioteca', 'libros']
 
     def create(self, validated_data):
         tipo_bibl_ingresado = validated_data.get('type_biblioteca')

@@ -43,6 +43,22 @@ onMounted(async () => {
   }
 })
 
+
+// mostrar registros de autores (si los hay)
+const libros = ref([])
+
+const hayRegistrosLibros = computed(() => libros.value.length > 0)
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/libros/')
+    libros.value = response.data
+    console.log('Autores obtenidas con éxito:', libros.value)
+  } catch (error) {
+    alert('Error al obtener libros')
+  }
+})
+
 </script>
 
 
@@ -81,7 +97,25 @@ onMounted(async () => {
         </div>
         <div class="containerRegistro">
             <h3>Libros:</h3>
-            <p>No hay registros</p>
+            <p v-if="!hayRegistrosLibros">No hay registros</p>
+            <ul class="colorDiferente">
+              <li v-for="libro in libros" :key="libro.id">
+                <p class="registro">Título: {{ libro.title }}</p>  
+                <p>Año de publicación: {{ libro.year_of_publication }}</p>
+                <div class="AutoresyBibliotecas">
+                  <p>Autores:</p>
+                  <ul>
+                    <li v-for="autor in libro.authors" :key="autor.id">{{ autor.name }}</li>
+                  </ul>
+                </div>
+                <div class="AutoresyBibliotecas">
+                  <p>Disponible en:</p>
+                   <ul>
+                     <li v-for="biblioteca in libro.libraries" :key="biblioteca.id">{{ biblioteca.name }}</li>
+                   </ul>
+                </div>
+              </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -120,6 +154,16 @@ p {
 .colorDiferente {
     color: rgb(149, 168, 230);
     margin-left: 17px;
+}
+
+.AutoresyBibliotecas {
+  display: flex;
+}
+
+.AutoresyBibliotecas li {
+  list-style-type: none;
+  margin-top: 3px;
+  margin-left: 4px;
 }
 
 </style>
