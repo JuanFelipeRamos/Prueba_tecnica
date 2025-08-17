@@ -16,14 +16,10 @@ const biblioteca = ref({
 
 const registrarBiblioteca = async () => {
   try {
-    const response = await api.post('/bibliotecas/', {
-      name: biblioteca.value.name,
-      type_biblioteca: tipoBiblioteca.value,
-      location: biblioteca.value.location,
-    })
+    const response = await api.post('/bibliotecas/', biblioteca.value)
 
     console.log('Registro de biblioteca exitoso')
-    console.log(biblioteca.value)
+    alert('Registro de biblioteca exitoso')
     router.push('/PanelAdmin')
 
   } catch (error) {
@@ -43,14 +39,14 @@ const registrarBiblioteca = async () => {
         <div class="inputs">
           <input v-model="biblioteca.name" type="text" required placeholder="Nombre de la biblioteca">
           <div class="checkInput">
-            <input type="radio" id="virtual" name="tipo" value="virtual" v-model="tipoBiblioteca">
+            <input type="radio" id="virtual" name="tipo" value="virtual" v-model="biblioteca.type_biblioteca">
             <label for="virtual">Virtual</label>
           </div>
           <div class="checkInput">
-            <input type="radio" id="fisica" name="tipo" value="fisica" v-model="tipoBiblioteca">
+            <input type="radio" id="fisica" name="tipo" value="fisica" v-model="biblioteca.type_biblioteca">
             <label for="fisica">Física</label>
           </div>
-          <input v-model="biblioteca.location" v-if="tipoBiblioteca === 'fisica'" type="text" required placeholder="Ubicación">
+          <input v-model="biblioteca.location" v-if="biblioteca.type_biblioteca === 'fisica'" type="text" required placeholder="Ubicación">
           <button>Continuar</button>
         </div>
       </form>
