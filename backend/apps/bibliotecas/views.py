@@ -1,6 +1,5 @@
 #pylint: disable=no-member
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from .models import Biblioteca
 from .serializers import BibliotecaSerializer
 

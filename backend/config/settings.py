@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'apps.admins',
     'apps.bibliotecas',
+    'apps.autores',
 ]
 
 REST_FRAMEWORK = {

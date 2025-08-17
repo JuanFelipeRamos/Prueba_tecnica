@@ -10,7 +10,7 @@ const mostrarInpuUbicacion = ref(false)
 const router = useRouter()
 const biblioteca = ref({
   name: '',
-  type_biblioteca: '',
+  type_biblioteca: 'virtual',
   location: ''
 })
 

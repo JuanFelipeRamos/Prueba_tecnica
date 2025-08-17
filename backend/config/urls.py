@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/admins/', include('apps.admins.urls')),
 
     path('api/', include('apps.bibliotecas.urls')),
+    path('api/', include('apps.autores.urls')),
 ]
