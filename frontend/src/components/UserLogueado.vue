@@ -27,7 +27,6 @@ onMounted(async () => {
   }
 })
 
-
 // mostrar registros de autores (si los hay)
 const autores = ref([])
 
@@ -44,7 +43,7 @@ onMounted(async () => {
 })
 
 
-// mostrar registros de autores (si los hay)
+// mostrar registros de libros (si los hay)
 const libros = ref([])
 
 const hayRegistrosLibros = computed(() => libros.value.length > 0)
@@ -110,7 +109,7 @@ onMounted(async () => {
                 </div>
                 <div class="AutoresyBibliotecas">
                   <p>Disponible en:</p>
-                   <ul>
+                   <ul id="espacioDebajo">
                      <li v-for="biblioteca in libro.libraries" :key="biblioteca.id">{{ biblioteca.name }}</li>
                    </ul>
                 </div>
@@ -164,6 +163,10 @@ p {
   list-style-type: none;
   margin-top: 3px;
   margin-left: 4px;
+}
+
+#espacioDebajo {
+  margin-bottom: 40px;
 }
 
 </style>
