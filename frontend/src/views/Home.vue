@@ -17,6 +17,36 @@ onMounted(async () => {
   }
 })
 
+// mostrar registros de autores (si los hay)
+const autores = ref([])
+
+const hayRegistrosAutores = computed(() => autores.value.length > 0)
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/autores/')
+    autores.value = response.data
+    console.log('Autores obtenidas con éxito:', autores.value)
+  } catch (error) {
+    alert('Error al obtener libros')
+  }
+})
+
+// mostrar registros de bibliotecas (si los hay)
+const bibliotecas = ref([])
+
+const hayRegistrosBibliotecas = computed(() => bibliotecas.value.length > 0)
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/bibliotecas/')
+    bibliotecas.value = response.data
+    console.log('Bibliotecas obtenidas con éxito:', bibliotecas.value)
+  } catch (error) {
+    alert('Error al obtener bibliotecas')
+  }
+})
+
 </script>
 
 
@@ -31,7 +61,7 @@ onMounted(async () => {
             <p v-if="!hayRegistrosLibros" class="sinRegistros">No hay registros</p>
             <div class="targeta" v-for="libro in libros" :key="libro.id">
                 <div class="gris">
-                    <p>{{ libro.title }}</p>
+                    <p class="colorTitle"><strong>{{ libro.title }}</strong></p>
                 </div>
                 <div class="blanco">
                     <p><strong>Publicado en:</strong> 
@@ -56,12 +86,13 @@ onMounted(async () => {
 
         <h2>Autores:</h2>
         <div class="containerTargetas">
-            <div class="targeta">
+            <p v-if="!hayRegistrosAutores" class="sinRegistros">No hay registros</p>
+            <div class="targeta" v-for="autor in autores" :key="autor.id">
                 <div class="gris">
-                    <p>Juan Gabriel García</p>
+                    <p class="colorTitle"><strong>{{ autor.name }}</strong></p>
                 </div>
                 <div class="blanco">
-                    <p>Nacionalidad: Colombiano</p>
+                    <p><strong>Nacionalidad:</strong> {{ autor.nationality }}</p>
                 </div>
                 <div class="gris">
                     <p>Ver libros...</p>
@@ -69,6 +100,16 @@ onMounted(async () => {
             </div>
         </div>
         <hr class="hr">
+
+        <h2>Bibliotecas:</h2>
+        <div class="containerBibliotecas">
+            <p v-if="!hayRegistrosBibliotecas" class="sinRegistros">No hay registros</p>
+            <div v-for="biblioteca in bibliotecas" :key="biblioteca.id">
+                <ul class="biblioteca">
+                    <li>{{ biblioteca.name }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -121,6 +162,10 @@ h2 {
     width: 100%;
 }
 
+.colorTitle {
+    color: rgb(0, 0, 34);
+}
+
 .blanco {
     display: flex;
     justify-content: center;
@@ -128,6 +173,16 @@ h2 {
     flex-direction: column;
     background-color: rgb(92, 92, 92);
     width: 100%;
+}
+
+.biblioteca {
+    margin: 10px 0px 10px 22px;
+}
+
+.containerBibliotecas {
+    display: flex;
+    flex-direction: column;
+    height: 130px;
 }
 
 </style>
