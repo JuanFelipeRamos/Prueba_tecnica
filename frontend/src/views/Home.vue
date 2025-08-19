@@ -5,12 +5,13 @@ import api from '../services/axios'
 // mostrar registros de libros (si los hay)
 const libros = ref([])
 
-const hayRegistrosLibros = computed(() => libros.value.length > 0)
+const hayRegistrosLibros = ref(false)
 
 onMounted(async () => {
   try {
     const response = await api.get('/libros/')
     libros.value = response.data
+    hayRegistrosLibros.value = libros.value.length > 0
     console.log('Libros obtenidas con éxito:', libros.value)
   } catch (error) {
     alert('Error al obtener libros')
@@ -20,12 +21,13 @@ onMounted(async () => {
 // mostrar registros de autores (si los hay)
 const autores = ref([])
 
-const hayRegistrosAutores = computed(() => autores.value.length > 0)
+const hayRegistrosAutores = ref(false)
 
 onMounted(async () => {
   try {
     const response = await api.get('/autores/')
     autores.value = response.data
+    hayRegistrosAutores.value = autores.value.length > 0
     console.log('Autores obtenidas con éxito:', autores.value)
   } catch (error) {
     alert('Error al obtener libros')
@@ -35,12 +37,13 @@ onMounted(async () => {
 // mostrar registros de bibliotecas (si los hay)
 const bibliotecas = ref([])
 
-const hayRegistrosBibliotecas = computed(() => bibliotecas.value.length > 0)
+const hayRegistrosBibliotecas = ref(false)
 
 onMounted(async () => {
   try {
     const response = await api.get('/bibliotecas/')
     bibliotecas.value = response.data
+    hayRegistrosBibliotecas.value = bibliotecas.value.length > 0
     console.log('Bibliotecas obtenidas con éxito:', bibliotecas.value)
   } catch (error) {
     alert('Error al obtener bibliotecas')
@@ -57,28 +60,33 @@ onMounted(async () => {
         </div>
         <hr>
         <h2>Libros:</h2>
-        <div class="containerTargetas">
+        <div class="containerTargetas containerLibros">
             <p v-if="!hayRegistrosLibros" class="sinRegistros">No hay registros</p>
-            <div class="targeta" v-for="libro in libros" :key="libro.id">
-                <div class="gris">
-                    <p class="colorTitle"><strong>{{ libro.title }}</strong></p>
-                </div>
-                <div class="blanco">
-                    <p><strong>Publicado en:</strong> 
-                        {{ libro.year_of_publication }}
-                    </p>
-                </div>
-                <div class="gris">
-                    <p><strong>Autores:</strong></p>
-                    <ul>
-                      <li v-for="autor in libro.authors" :key="autor.id">{{ autor.name }}</li>
-                    </ul>
-                </div>
-                <div class="blanco">
-                    <p><strong>Disponible en:</strong></p>
-                     <ul>
-                       <li v-for="biblioteca in libro.libraries" :key="biblioteca.id">{{ biblioteca.name }}</li>
-                     </ul>
+            <div class="libro-grid">
+                <div class="targeta targLibr" v-for="libro in libros" :key="libro.id">
+                    <div class="gris">
+                        <p class="colorTitle"><strong>{{ libro.title }}</strong></p>
+                    </div>
+                    <div class="blanco">
+                        <p><strong>Publicado en:</strong> 
+                            {{ libro.year_of_publication }}
+                        </p>
+                    </div>
+                    <div class="gris">
+                        <p><strong>Autores:</strong></p>
+                        <ul>
+                          <li v-for="autor in libro.authors" :key="autor.id">{{ autor.name }}</li>
+                        </ul>
+                    </div>
+                    <div class="blanco abajo">
+                        <p><strong>Disponible en:</strong></p>
+                         <ul>
+                           <router-link :to="`/LibrosdeBiblioteca/${biblioteca.id}`" v-for="biblioteca in libro.libraries" :key="biblioteca.id" class="linkColorBlanco">
+                            {{ biblioteca.name }}
+                            <br>
+                           </router-link>
+                         </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,15 +95,14 @@ onMounted(async () => {
         <h2>Autores:</h2>
         <div class="containerTargetas">
             <p v-if="!hayRegistrosAutores" class="sinRegistros">No hay registros</p>
-            <div class="targeta" v-for="autor in autores" :key="autor.id">
-                <div class="gris">
-                    <p class="colorTitle"><strong>{{ autor.name }}</strong></p>
-                </div>
-                <div class="blanco">
-                    <p><strong>Nacionalidad:</strong> {{ autor.nationality }}</p>
-                </div>
-                <div class="gris">
-                    <p>Ver libros...</p>
+            <div class="libro-grid">
+                <div class="targeta targAut" v-for="autor in autores" :key="autor.id">
+                    <div class="gris">
+                        <p class="colorTitle"><strong>{{ autor.name }}</strong></p>
+                    </div>
+                    <div class="blanco">
+                        <p><strong>Nacionalidad:</strong> {{ autor.nationality }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,6 +142,17 @@ h2 {
     justify-content: center;
 }
 
+.containerLibros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.libro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .sinRegistros {
     font-size: 17px;
 }
@@ -145,6 +163,10 @@ h2 {
     margin: 20px 80px 0px 80px;
     border: solid 2px rgb(118, 125, 158);
     border-radius: 5px;
+}
+
+.targLibr, .targAut {
+    width: 60%;
 }
 
 .targeta p, .targeta li {
@@ -174,13 +196,18 @@ h2 {
     flex-direction: column;
     background-color: rgb(92, 92, 92);
     width: 100%;
+    padding-bottom: 15px;
+}
+
+.abajo {
+    height: 90px;
 }
 
 .biblioteca {
     margin: 10px 0px 10px 22px;
 }
 
-.biblioteca li {
+.biblioteca li, .linkColorBlanco {
     color: white;
 }
 

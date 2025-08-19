@@ -21,8 +21,8 @@ class LibroSerializer(serializers.ModelSerializer):
         model = Libro
         fields = [
             'id', 'title', 'year_of_publication',
-            'authors', 'libraries',   # lo que ves en GET
-            'authors_ids', 'libraries_ids'  # lo que mandas en POST/PUT
+            'authors', 'libraries',
+            'authors_ids', 'libraries_ids'
         ]
 
     def create(self, validated_data):

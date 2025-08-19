@@ -64,12 +64,10 @@ onMounted(async () => {
           <input v-model="libro.title" type="text" required placeholder="Título del libro">
           <label>Selecciona el año de publicación</label>
           <input v-model="libro.year_of_publication" type="number" min=1450 max=2025 step="1" required>
-          <!--Para seleccionar autor/es-->
           <label>Selecciona uno o varios autores</label>
           <select v-model="libro.authors_ids" multiple required>
             <option v-for="autor in autores" :key="autor.id" :value="autor.id">{{ autor.name }}</option>
           </select>
-          <!--Para seleccionar biblioteca/s-->
           <label>Selecciona una o varias bibliotecas</label>
           <select v-model="libro.libraries_ids" multiple required>
             <option v-for="biblioteca in bibliotecas" :key="biblioteca.id" :value="biblioteca.id">{{ biblioteca.name }}</option>

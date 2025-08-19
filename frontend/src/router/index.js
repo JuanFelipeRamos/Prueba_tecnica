@@ -9,6 +9,7 @@ import AddAutor from '@/components/AddAutor.vue'
 import AddLibro from '@/components/AddLibro.vue'
 import EditBiblioteca from '@/components/EditBiblioteca.vue'
 import LibrosdeBiblioteca from '@/views/LibrosdeBiblioteca.vue'
+import LibrosdeAutor from '@/views/LibrosdeAutor.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +72,12 @@ const router = createRouter({
       path: '/LibrosdeBiblioteca/:id',
       name: 'librosdeBiblioteca',
       component: LibrosdeBiblioteca
+    },
+
+    {
+      path: '/LibrosdeAutor/:id',
+      name: 'librosdeAutor',
+      component: LibrosdeAutor
     },
 
   ],
