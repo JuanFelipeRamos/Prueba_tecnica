@@ -28,8 +28,3 @@ class UsuarioSerializer(serializers.ModelSerializer):
         user.is_staff = True
         user.save()
         return user
-
-class EditUsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = ["first_name", "last_name"]
