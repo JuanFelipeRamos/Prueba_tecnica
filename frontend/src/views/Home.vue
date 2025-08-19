@@ -11,7 +11,7 @@ onMounted(async () => {
   try {
     const response = await api.get('/libros/')
     libros.value = response.data
-    console.log('Autores obtenidas con éxito:', libros.value)
+    console.log('Libros obtenidas con éxito:', libros.value)
   } catch (error) {
     alert('Error al obtener libros')
   }
@@ -106,7 +106,7 @@ onMounted(async () => {
             <p v-if="!hayRegistrosBibliotecas" class="sinRegistros">No hay registros</p>
             <div v-for="biblioteca in bibliotecas" :key="biblioteca.id">
                 <ul class="biblioteca">
-                    <li>{{ biblioteca.name }}</li>
+                    <router-link :to="`/LibrosdeBiblioteca/${biblioteca.id}`"><li>{{ biblioteca.name }}</li></router-link>
                 </ul>
             </div>
         </div>
@@ -119,6 +119,7 @@ onMounted(async () => {
 .containerH1 {
     display: flex;
     justify-content: center;
+    margin: 10px 0px;
 }
 
 .hr {
@@ -177,6 +178,10 @@ h2 {
 
 .biblioteca {
     margin: 10px 0px 10px 22px;
+}
+
+.biblioteca li {
+    color: white;
 }
 
 .containerBibliotecas {

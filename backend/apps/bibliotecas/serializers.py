@@ -6,7 +6,7 @@ class BibliotecaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Biblioteca
         fields = ['id', 'name', 'location', 'type_biblioteca', 'libros']
-        read_only_fields = ['libros']
+        depth = 1
 
     def create(self, validated_data):
         tipo_bibl_ingresado = validated_data.get('type_biblioteca')

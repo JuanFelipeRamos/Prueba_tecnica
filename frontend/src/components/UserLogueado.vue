@@ -81,6 +81,9 @@ onMounted(async () => {
                 <div v-if="biblioteca.type_biblioteca === 'fisica'">
                   <p>Dirección: {{ biblioteca.location }}</p>
                 </div>
+                <div>
+                  <router-link to="EditBiblioteca" class="editar">Editar biblioteca</router-link>
+                </div>
               </li>
             </ul>
         </div>
@@ -91,6 +94,9 @@ onMounted(async () => {
               <li v-for="autor in autores" :key="autor.id">
                 <p class="registro">Nombre: {{ autor.name }}</p>  
                 <p>Nacionalidad: {{ autor.nationality }}</p> 
+                <div>
+                  <router-link to="EditBiblioteca" class="editar">Editar autor</router-link>
+                </div>
               </li>
             </ul>
         </div>
@@ -129,7 +135,7 @@ onMounted(async () => {
 }
 
 .btn {
-    padding: 5px 20px;
+    padding: 7px 20px;
     margin: 0px 50px;
     background-color: rgb(70, 70, 141);
     color: white;
@@ -142,6 +148,10 @@ onMounted(async () => {
     margin-left: 30px;
 }
 
+.editar {
+  color: rgb(76, 191, 226);
+}
+
 p {
     margin-top: 3px;
 }
@@ -151,8 +161,8 @@ p {
 }
 
 .colorDiferente {
-    color: rgb(149, 168, 230);
-    margin-left: 17px;
+  color: rgb(149, 168, 230);
+  margin-left: 17px;
 }
 
 .AutoresyBibliotecas {
